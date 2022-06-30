@@ -1,0 +1,29 @@
+{% extends 'app/base.html' %} {% block contenido%}
+<a href="{% url 'agregar_mascota'  %}" class="btn btn-dark">Agregar una mascota</a>
+
+
+<table>
+
+    <tr>
+        <th>Raza</th>
+        <th>Peso</th>
+        <th>Estatura</th>
+        <th>Años de vida</th>
+        <th>Precio</th>
+
+    </tr>
+    {% for m in mascotas %}
+    <tr>
+        <td>{{m.raza | title }}</td>
+        <td>{{m.peso | title}}</td>
+        <td>{{m.estatura | title }}</td>
+        <td>{{m.annos_de_vida | title }}</td>
+        <td>{{m.precio | title }}</td>
+    </tr>
+    <td>
+        <a href="{% url 'modificar_mascota' m.id %}" class="btn btn-info">Modificar</a>
+        <a href="{% url 'eliminar_mascota' m.id %}" class="btn btn-danger">Eliminar</a>
+    </td>
+    {%endfor%}
+</table>
+{% endblock %}

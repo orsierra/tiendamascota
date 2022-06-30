@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de mascotas</title>
+
+    <link rel="stylesheet" href="{% static '/css/estilo_base.css' %}">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>
+            <p>
+                Bienvenido a nuestra tienda de mascotas
+            </p>
+        </h1>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'listar_mascotas' %}">Mascotas <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_productos' %}">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="{% url 'logout' %}">Cerrar sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"> @ {{ user.username }}</a>
+                </li>
+                {% else %}
+
+                <li>
+                    <a href="{% url 'login' %}">iniciar sesión</a>
+                </li>
+
+                <li>
+                    <a href="{% url 'registro' %}">Registrate</a>
+                </li>
+                {%endif%}
+
+            </ul>
+        </div>
+    </nav>
+
+    <div class="contenido">
+        {% block contenido %} {% endblock %}
+
+    </div>
+    <div>
+        <footer class="pie-pagina">
+            <div class="grupo-1">
+                <div class="box">
+                    <figure>
+                        
+                    </figure>
+                </div>
+                <div class="box">
+                    <h2>SOBRE NOSOTROS</h2>
+                    <p>Somo una empresa dedicada a la venta de mascotas y accesorios.</p>
+                    <p>Vivan los animales</p>
+                </div>
+
+            </div>
+            <div class="grupo-2">
+                <small>&copy; 2022 <b>Mascotas</b> - Todos los Derechos Reservados.</small>
+            </div>
+        </footer>
+    </div>
+
+
+</body>
+
+</html>

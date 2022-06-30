@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %} {% block contenido%}
+<a href="{% url 'agregar_producto'  %}" class="btn btn-dark">Agregar un producto</a>
+
+
+<table>
+
+    <tr>
+        <th>Codigo</th>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+    </tr>
+    {% for p in productos %}
+    <tr>
+        <td>{{p.codigo | title }}</td>
+        <td>{{p.nombre | title}}</td>
+        <td>{{p.cantidad | title }}</td>
+        <td>{{p.precio | title }}</td>
+
+    </tr>
+    <td>
+        <a href="{% url 'modificar_producto' p.id %}" class="btn btn-info">Modificar</a>
+        <a href="{% url 'eliminar_producto' p.id %}" class="btn btn-danger">Eliminar</a>
+    </td>
+    {%endfor%}
+</table>
+{% endblock %}
