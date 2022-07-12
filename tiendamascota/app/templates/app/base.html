@@ -60,10 +60,16 @@
 
             </ul>
         </div>
-    </nav>
+    </nav>  
 
     <div class="contenido">
-        {% block contenido %} {% endblock %}
+        
+    
+
+        {% block contenido %}
+            
+        
+        {% endblock %}
 
     </div>
     <div>
@@ -87,6 +93,23 @@
         </footer>
     </div>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    {% if messages %}
+    {%for m in messages%}
+     <script>
+        Swal.fire  ({
+            "title":"Felicitaciones",
+            "text": "{{m}}",
+            "icon":"success"
+        })
+     </script>
+
+    {% endfor %}
+{% endif %}
+{% block js %}
+{% endblock %}
 
 </body>
 

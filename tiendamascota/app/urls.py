@@ -2,7 +2,7 @@ from django.urls import path, include
 from .views import agregar_mascota, home, producto, mascota,contacto, agregar_producto,\
     listar_productos, modificar_producto, eliminar_producto, registro, agregar_mascota,\
     listar_mascotas, modificar_mascota,eliminar_mascota, ProductoViewset,\
-        mascota_collection, mascota_element      
+        mascota_collection, mascota_element,producto_collection, producto_element  
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -33,8 +33,15 @@ urlpatterns = [
     ##rest_framework
     path('api/', include(router.urls)),     
         
-    # api
+    # api mascota
     path('mascotas/',  mascota_collection , name='mascota_collection'),
     path('mascotas/<int:pk>/', mascota_element ,name='mascota_element'),
+    
+    #Api producto
+    path('productos/',  producto_collection , name='producto_collection'),
+    path('productos/<int:pk>/', producto_element ,name='producto_element'),
+    
+
+
 
 ]

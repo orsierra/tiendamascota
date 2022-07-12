@@ -7,8 +7,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
 from rest_framework  import viewsets
 from .serializers import ProductoSerializer, MascotaSerializer
-
-
+from django.contrib import messages
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -16,6 +15,7 @@ from rest_framework import status
 
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
+import requests
 
 
 
@@ -85,6 +85,7 @@ def modificar_producto(request, id):
         if form.is_valid():
             instancia = form.save(commit=False)
             instancia.save()
+            messages.success(request, "modificar correctamente")
 
     return render(request, "app/producto/modificar.html", {'form': form})
 
@@ -94,6 +95,7 @@ def modificar_producto(request, id):
 def eliminar_producto(request, id):
     producto = get_object_or_404(Producto, id=id)
     producto.delete()
+    messages.success(request, " eliminado correctamente")
     return redirect(to="listar_productos")
 
 #### Mascotas##
@@ -167,7 +169,6 @@ def registro(request):
 
 ###Serializer Mascota
 
-# se pase a la función de vista. En este momento, solo admitimos solicitudes GET
 @api_view(['GET'])
 def mascota_collection(request):
     if request.method == 'GET':
@@ -196,3 +197,35 @@ def mascota_element(request, pk):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+###Serializer Producto
+@api_view(['GET'])
+def producto_collection(request):
+    if request.method == 'GET':
+        productos = Producto.objects.all()
+        serializer = ProductoSerializer(productos, many=True)
+        return Response(serializer.data)
+
+
+    
+@api_view(['GET', 'PUT', 'DELETE'])
+def producto_element(request, pk):
+    producto = get_object_or_404(Producto, id=pk)
+
+    if request.method == 'GET':
+        serializer = ProductoSerializer(producto)
+        return Response(serializer.data)
+    elif request.method == 'DELETE':
+        producto.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    elif request.method == 'PUT': 
+        producto_new = JSONParser().parse(request) 
+        serializer = ProductoSerializer(mascota, data=producto_new) 
+        if serializer.is_valid(): 
+            serializer.save() 
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
+    
