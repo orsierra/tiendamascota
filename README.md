@@ -1,4 +1,4 @@
 # tiendamascota
- Entrega 4  
+ Entrega Examen transversal
  Integrante: Orlando Sierra Valderrama
  Seccion: 007D
